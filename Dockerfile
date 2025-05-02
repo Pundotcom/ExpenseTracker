@@ -1,7 +1,7 @@
 # ใช้ภาพพื้นฐานจาก ASP.NET
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 10000  # ใช้พอร์ตที่ Render กำหนด (10000)
+EXPOSE 10000  
 
 # ใช้ SDK ของ .NET สำหรับการสร้างโปรเจค
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
