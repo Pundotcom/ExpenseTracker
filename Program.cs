@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
     ContentRootPath = Directory.GetCurrentDirectory()
 });
 
-// ✅ CORS: Allow any origin
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -44,16 +44,27 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// ✅ ต้องเรียกก่อน Swagger
+
 app.UseCors("AllowAll");
 
-app.UseSwagger();
-app.UseSwaggerUI();
 
-// 🟡 ปิด https redirection ถ้า deploy แบบ HTTP
-// app.UseHttpsRedirection();
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ExpenseTracker API");
+    c.RoutePrefix = "swagger";
+});
+
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 app.MapControllers();
+
+
+app.MapGet("/", () => "ExpenseTracker API is running");
 
 app.Run();
