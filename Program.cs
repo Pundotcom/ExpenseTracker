@@ -3,12 +3,12 @@ using ExpenseTracker.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";  
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     Args = args,
-    WebRootPath = "wwwroot",
+    WebRootPath = "wwwroot", 
     ApplicationName = typeof(Program).Assembly.FullName,
     ContentRootPath = Directory.GetCurrentDirectory()
 });
@@ -33,6 +33,7 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
 
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase("ExpenseDb"));
 
@@ -52,7 +53,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "ExpenseTracker API");
-    c.RoutePrefix = "swagger";
+    c.RoutePrefix = string.Empty;  
 });
 
 
@@ -63,7 +64,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 app.MapControllers();
-
 
 app.MapGet("/", () => "ExpenseTracker API is running");
 
